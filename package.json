@@ -5,6 +5,7 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "start": "nuxt start",
+    "test": "./node_modules/.bin/jest",
     "storybook": "npx nuxt storybook"
   },
   "dependencies": {
@@ -12,6 +13,10 @@
   },
   "devDependencies": {
     "@nuxtjs/storybook": "^2.2.1",
+    "@storybook/addon-controls": "^6.0.22",
+    "@storybook/addon-docs": "^6.0.22",
+    "@testing-library/dom": "^7.24.3",
+    "@testing-library/user-event": "^12.1.6",
     "@testing-library/vue": "^5.0.4",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.9.0",
@@ -19,6 +24,10 @@
     "eslint-loader": "^4.0.2",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
-    "prettier": "^2.1.2"
+    "jest": "^26.4.2",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.1.2",
+    "sass-loader": "^10.0.2",
+    "vue-jest": "^3.0.7"
   }
 }
