@@ -1,13 +1,13 @@
 <template>
-  <button
-    class="hamburger"
+  <BaseButton
+    class="hamburger-button"
     :class="localExpanded ? 'expanded' : ''"
     @click="toggleHamburger"
   >
     <div class="bar1"></div>
     <div class="bar2"></div>
     <div class="bar3"></div>
-  </button>
+  </BaseButton>
 </template>
 
 <script>
@@ -25,18 +25,15 @@ export default {
   },
   watch: {
     expanded(val) {
-      debugger;
       if (val !== this.localExpanded) this.localExpanded = val;
     },
   },
   created() {
-    debugger;
     if (this.expanded !== this.localExpanded)
       this.localExpanded = this.expanded;
   },
   methods: {
     toggleHamburger() {
-      debugger;
       this.localExpanded = !this.localExpanded;
       this.$emit('click', this.localExpanded);
     },
@@ -45,9 +42,8 @@ export default {
 </script>
 
 <style lang="scss">
-.hamburger {
-  display: inline-block;
-  cursor: pointer;
+.hamburger-button {
+  background: transparent;
 
   .bar1,
   .bar2,

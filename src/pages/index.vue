@@ -1,3 +1,11 @@
 <template>
-  <h1>Hello world!</h1>
+  <MainHeader />
 </template>
+
+<script>
+import MainHeader from '~/components/navigation/MainHeader.vue';
+
+export default {
+  components: { MainHeader },
+};
+</script>
