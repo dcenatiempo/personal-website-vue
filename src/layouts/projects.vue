@@ -22,6 +22,11 @@ const projects = [
     link:
       'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/simon-game.vue',
   },
+  {
+    route: 'tic-tac-toe',
+    link:
+      'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/tic-tac-toe.vue',
+  },
 ];
 
 export default {
@@ -33,9 +38,10 @@ export default {
   },
   computed: {
     currentIndex() {
-      const index = 0;
+      const vm = this;
+      let index = 0;
       projects.forEach((project, i) => {
-        if (this.$route.path.includes(project.name)) index = i;
+        if (vm.$route.path.includes(project.route)) index = i;
       });
       return index;
     },

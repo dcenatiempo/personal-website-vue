@@ -49,14 +49,12 @@
           link="/projects/simon-game"
           image="/images/simon-screen-shot.png"
         />
-        <figure>
-          <h3>Tic-Tac-Toe</h3>
-          <a
-            class="tic-tac-toe"
-            target="_blank"
-            href="./tic-tac-toe/index.html"
-          ></a>
-        </figure>
+        <PortfolioItem
+          title="Tic-Tac-Toe"
+          content="This game features 3 difficulty levels and an unbeatable AI. Implements a min-max algorithm that I spent way too long figuring out.<br/><br/>Skills Used: jQuery, Algorithms"
+          link="/projects/tic-tac-toe"
+          image="/images/tic-tac-toe-screen-shot.png"
+        />
         <figure>
           <h3>Markdown Previewer</h3>
           <a
