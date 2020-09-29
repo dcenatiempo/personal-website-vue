@@ -39,18 +39,16 @@
       <div class="portfolio-list">
         <PortfolioItem
           title="Weather App"
-          content="This is a mobile first responsive PWA</br></br>Skills Used: service workers, AJAX, Transitions, Animations Touch Events, Browser Storage, Geolocation API, Responsive Layout, Grid"
+          content="This is a mobile first responsive PWA<br/><br/>Skills Used: service workers, AJAX, Transitions, Animations Touch Events, Browser Storage, Geolocation API, Responsive Layout, Grid"
           link="https://devins-weather-app.herokuapp.com"
           image="/images/weather-app-screen-shot.jpeg"
         />
-        <figure>
-          <h3>Classic 80's Simon Game</h3>
-          <a
-            class="simon-game"
-            target="_blank"
-            href="./simon-game/index.html"
-          ></a>
-        </figure>
+        <PortfolioItem
+          title="Classic 80's Simon Game"
+          content="This blast from the past uses recorded sounds from an actual Simon device.<br/><br/> Skills Used: Promises, SVG, Responsive Layout, Flex, HTMLAudioElement"
+          link="/projects/simon-game"
+          image="/images/simon-screen-shot.png"
+        />
         <figure>
           <h3>Tic-Tac-Toe</h3>
           <a

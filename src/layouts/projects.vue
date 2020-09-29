@@ -19,7 +19,8 @@ import ProjectNav from '~/components/navigation/ProjectNav.vue';
 const projects = [
   {
     route: 'simon-game',
-    link: 'https://github.com/dcenatiempo/simon-game',
+    link:
+      'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/simon-game.vue',
   },
 ];
 
