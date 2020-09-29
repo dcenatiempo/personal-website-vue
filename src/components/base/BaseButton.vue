@@ -9,7 +9,7 @@ export default {};
 </script>
 
 <style lang="scss">
-button {
+.base-button {
   position: relative;
   font-family: 'Averia Libre', sans-serif;
   padding: 0 25px;

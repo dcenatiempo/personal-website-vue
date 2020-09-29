@@ -20,9 +20,15 @@
             'small-screen': viewport.w <= breakpoint,
           }"
         >
-          <li><a class="nav-link" href="#about">about</a></li>
-          <li><a class="nav-link" href="#portfolio">portfolio</a></li>
-          <li><a class="nav-link" href="#contact">contact</a></li>
+          <li>
+            <a href="/#about" @click="expanded = false">about</a>
+          </li>
+          <li>
+            <a href="/#portfolio" @click="expanded = false">portfolio</a>
+          </li>
+          <li>
+            <a href="/#contact" @click="expanded = false">contact</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -37,25 +43,22 @@ export default {
   data() {
     return {
       expanded: false,
-      viewport: this.$viewport,
+      viewport: { h: 0, w: 0 },
       breakpoint: 700,
     };
   },
-  props: {
-    /**
-    The expanded state of the button
-    */
-    // expanded: { type: Boolean, default: false },
-  },
   watch: {
-    expanded(val) {},
     'viewport.w'(w) {
       if (!this.expanded) return;
       if (w <= this.breakpoint) return;
       this.expanded = false;
     },
   },
-  created() {},
+  created() {
+    if (process.client) {
+      this.viewport = this.$viewport;
+    }
+  },
   methods: {},
 };
 </script>
@@ -68,8 +71,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  position: -webkit-sticky; /* required for Safari */
-  position: sticky;
+  position: fixed;
   top: 0; /* required as well. */
   height: 60px;
   z-index: 10;
@@ -125,7 +127,7 @@ export default {
           display: block;
         }
 
-        .nav-link {
+        a {
           color: white;
           font-size: 24px;
           padding-right: 20px;
@@ -133,7 +135,7 @@ export default {
           font-family: 'Averia Libre';
         }
 
-        .nav-link:hover {
+        a:hover {
           color: #22714c;
         }
       }

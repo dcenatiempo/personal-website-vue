@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss">
-.hamburger-button {
+.base-button.hamburger-button {
   background: transparent;
 
   .bar1,
