@@ -15,7 +15,11 @@ export default {
 export const Primary = args => ({
   components: { HamburgerButton },
   data: () => args,
-  template: '<HamburgerButton :expanded="expanded" />',
+  template: `
+    <div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: gray">
+      <HamburgerButton :expanded="expanded" />
+    </div>
+  `,
 });
 
 // Primary.argTypes = {
