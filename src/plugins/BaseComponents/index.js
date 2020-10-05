@@ -1,4 +1,11 @@
 import Vue from 'vue';
+/*******************************************************************************
+ * I can't get automatic base component registration to work in jest,
+ *   because it relies on webpack
+ *   so we have to manually export/import all base components through
+ *   <rootDir>/src/components/base/index.js
+ * *****************************************************************************
+
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 
@@ -34,4 +41,14 @@ requireComponent.keys().forEach(fileName => {
     // otherwise fall back to module's root.
     componentConfig.default || componentConfig
   );
+});
+*******************************************************************************/
+
+import * as BaseComponents from '../../components/base';
+
+Object.keys(BaseComponents).forEach(key => {
+  const componentName = key;
+  const componentConfig = BaseComponents[key];
+
+  Vue.component(componentName, componentConfig.default || componentConfig);
 });

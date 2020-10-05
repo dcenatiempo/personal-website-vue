@@ -9,8 +9,10 @@ module.exports = {
   },
   collectCoverage: false,
   collectCoverageFrom: ['src/components/*.{js,vue}', '!**/node_modules/**'],
+  coverageDirectory: '<rootDir>/test',
   coverageReporters: ['html', 'text-summary'],
   moduleNameMapper: {
     '~(.*)$': '<rootDir>/src/$1',
   },
+  setupFiles: ['<rootDir>/test/setup.js'],
 };

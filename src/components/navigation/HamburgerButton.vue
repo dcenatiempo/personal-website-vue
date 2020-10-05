@@ -11,10 +11,7 @@
 </template>
 
 <script>
-import BaseButton from '~/components/base/BaseButton.vue';
-
 export default {
-  components: { BaseButton },
   props: {
     expanded: { type: Boolean, default: false },
   },
