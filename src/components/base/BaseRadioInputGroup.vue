@@ -9,7 +9,7 @@
         :label="`${option.label}`"
         :required="required && isSelected(option) && localValue"
         :disabled="disabled"
-        @change="onInput(option.option)"
+        @change="onInput(option)"
       />
     </template>
   </fieldset>
@@ -71,7 +71,20 @@ export default {
       return option.key === this.getKey(this.localValue);
     },
     onInput(option) {
-      this.localValue = option;
+      // invalid input
+      if (!option || option.key === undefined) return;
+
+      // if already checked, we might need to un-check it
+      if (this.getKey(this.localValue) === option.key) {
+        if (this.required) return;
+        this.localValue = null;
+      }
+
+      // otherwise check the un-checked option
+      else {
+        this.localValue = option.option;
+      }
+
       this.$emit('change', this.getReturnValue(this.localValue));
     },
     getLabel(option) {

@@ -7,7 +7,7 @@
         :name="id"
         :checked="isSelected(option.key)"
         :label="`${option.label}`"
-        :required="isRequried(option)"
+        :required="isRequired(option)"
         :disabled="disabled"
         @change="onInput(option)"
       />
@@ -92,7 +92,7 @@ export default {
       return isSelected;
     },
     buildSelectedMap(selected) {
-      if (!selected) return {};
+      if (!selected || !Array.isArray(selected)) return [];
 
       const map = selected.reduce((map, item) => {
         const key = this.getKey(item);
@@ -173,7 +173,10 @@ export default {
     },
     getReturnValue(selectedMap) {
       const vm = this;
-      if (this.returnType === 'key') return Object.keys(selectedMap);
+      if (this.returnType === 'key')
+        return Object.keys(selectedMap).map(key =>
+          this.getKey(selectedMap[key])
+        );
 
       // else returnType === 'value'
       return Object.keys(selectedMap).map(key => {
