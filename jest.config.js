@@ -7,7 +7,10 @@ module.exports = {
     // process `*.vue` files with `vue-jest`
     '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest',
   },
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: ['src/components/*.{js,vue}', '!**/node_modules/**'],
   coverageReporters: ['html', 'text-summary'],
+  moduleNameMapper: {
+    '~(.*)$': '<rootDir>/src/$1',
+  },
 };
