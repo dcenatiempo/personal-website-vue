@@ -38,7 +38,7 @@ Required to differenciate multiple inputs on the same page
     disabled: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     label: { type: [String], default: 'my label' },
-    returnValue: {
+    returnType: {
       type: String,
       default: 'boolean',
       validator: val => ['boolean', 'binary'].includes(val),
@@ -58,7 +58,7 @@ Required to differenciate multiple inputs on the same page
       this.emitChange();
     },
     formatReturn(val) {
-      if (this.returnValue === 'binary') return +this.localChecked;
+      if (this.returnType === 'binary') return +this.localChecked;
       return this.localChecked;
     },
     emitChange() {

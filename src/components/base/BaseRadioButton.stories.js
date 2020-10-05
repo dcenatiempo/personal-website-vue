@@ -9,7 +9,7 @@ export default {
     checked: { control: { type: 'boolean' } },
     disabled: { control: { type: 'boolean' } },
     required: { control: { type: 'boolean' } },
-    returnValue: { control: { type: 'radio', options: ['boolean', 'binary'] } },
+    returnType: { control: { type: 'radio', options: ['boolean', 'binary'] } },
     change: { action: { type: 'change' } },
   },
   args: {
@@ -55,7 +55,7 @@ export const basic = args => {
         :checked="checked"
         :disabled="disabled"
         :required="required"
-        :returnValue="returnValue"
+        :returnType="returnType"
         @change="change"
       />`,
   };
