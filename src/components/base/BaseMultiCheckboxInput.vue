@@ -127,7 +127,9 @@ export default {
       }
 
       // if key is not in selectedMap - we need to add it.
-      else {
+      else if (this.single) {
+        this.selectedMap = { [key]: option };
+      } else {
         this.selectedMap = {
           ...this.selectedMap,
           [key]: option,

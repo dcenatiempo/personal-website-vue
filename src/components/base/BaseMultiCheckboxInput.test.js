@@ -71,6 +71,28 @@ test('required prop prevents toggle off', () => {
   expect(utils.emitted().change[1]).not.toBeDefined();
 });
 
+test('isSingle', () => {
+  const props = {
+    id: 'some-id',
+    value: [],
+    options: ['a', 'b', 'c'],
+    single: true,
+  };
+  const utils = render(BaseMultiCheckboxInput, { props });
+
+  const a = utils.getByText('a');
+  const b = utils.getByText('b');
+
+  fireEvent.click(a);
+  expect(utils.emitted().change[0][0]).toEqual(['a']);
+
+  fireEvent.click(b);
+  expect(utils.emitted().change[1][0]).toEqual(['b']);
+
+  fireEvent.click(b);
+  expect(utils.emitted().change[2][0]).toEqual([]);
+});
+
 // array of objects
 test('it handles an array of object options and emits array of object', () => {
   const props = {
