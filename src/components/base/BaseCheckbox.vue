@@ -4,12 +4,12 @@
     :class="{ disabled, required, checked: localChecked }"
   >
     <input
-      type="checkbox"
       :id="id"
+      type="checkbox"
       :name="name"
       :checked="localChecked"
-      @click.prevent="onClick"
       :disabled="disabled"
+      @click.prevent="onClick"
     />
     <label :for="id">
       {{ label }}
@@ -29,7 +29,7 @@ export default {
 Required to differenciate multiple inputs on the same page
 */
     id: { type: [Number, String], required: true },
-    name: { type: String },
+    name: { type: String, default: '' },
     checked: {
       type: [Boolean, Number],
       default: false,
@@ -50,21 +50,6 @@ Required to differenciate multiple inputs on the same page
     };
   },
   computed: {},
-  methods: {
-    onClick() {
-      if (this.disabled) return;
-      if (this.required && this.localChecked) return;
-      this.localChecked = !this.localChecked;
-      this.emitChange();
-    },
-    formatReturn(val) {
-      if (this.returnType === 'binary') return +this.localChecked;
-      return this.localChecked;
-    },
-    emitChange() {
-      this.$emit('change', this.formatReturn(this.localChecked));
-    },
-  },
   watch: {
     checked(nextChecked) {
       if (nextChecked === this.localChecked) return;
@@ -76,6 +61,21 @@ Required to differenciate multiple inputs on the same page
   },
   created() {
     this.localChecked = !!this.checked;
+  },
+  methods: {
+    onClick() {
+      if (this.disabled) return;
+      if (this.required && this.localChecked) return;
+      this.localChecked = !this.localChecked;
+      this.emitChange();
+    },
+    formatReturn() {
+      if (this.returnType === 'binary') return +this.localChecked;
+      return this.localChecked;
+    },
+    emitChange() {
+      this.$emit('change', this.formatReturn(this.localChecked));
+    },
   },
 };
 </script>

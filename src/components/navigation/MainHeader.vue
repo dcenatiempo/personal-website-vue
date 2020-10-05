@@ -10,8 +10,8 @@
         <HamburgerButton
           v-if="viewport.w <= breakpoint"
           :expanded="expanded"
-          @click="val => (expanded = val)"
           style="z-index: 10"
+          @click="val => (expanded = val)"
         />
         <ul
           class="nav-links"

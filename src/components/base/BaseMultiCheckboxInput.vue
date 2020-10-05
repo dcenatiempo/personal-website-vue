@@ -2,16 +2,12 @@
   <fieldset class="base-multi-checkbox-input">
     <template v-for="option in formattedOptions">
       <BaseCheckbox
-        :key="option.key"
         :id="id + '-' + option.key"
+        :key="option.key"
         :name="id"
         :checked="isSelected(option.key)"
         :label="`${option.label}`"
-        :required="
-          required &&
-          isSelected(option.key) &&
-          Object.keys(selectedMap).length === 1
-        "
+        :required="isRequried(option)"
         :disabled="disabled"
         @change="onInput(option)"
       />
@@ -33,13 +29,13 @@ export default {
   props: {
     id: { type: [Number, String], required: true },
     options: { type: [Array], default: () => [] },
-    value: { type: [Array] },
+    value: { type: [Array], default: () => [] },
     labelExtractor: { type: [String, Function], default: () => item => item },
     keyExtractor: { type: [String, Function], default: () => item => item },
     returnType: {
       type: String,
       default: 'value',
-      validator: type => ['key', 'value'],
+      validator: type => ['key', 'value'].includes(type),
     },
     single: {
       type: Boolean,
@@ -72,7 +68,25 @@ export default {
       }));
     },
   },
+  watch: {
+    value(next) {
+      const prevMap = this.selectedMap;
+      const nextMap = this.buildSelectedMap(next);
+      if (isEqual(Object.keys(prevMap), Object.keys(nextMap))) return;
+      this.selectedMap = nextMap;
+    },
+  },
+  created() {
+    this.selectedMap = this.buildSelectedMap(this.value);
+  },
   methods: {
+    isRequired(option) {
+      return (
+        this.required &&
+        this.isSelected(option.key) &&
+        Object.keys(this.selectedMap).length === 1
+      );
+    },
     isSelected(key) {
       const isSelected = this.selectedMap[key] !== undefined;
       return isSelected;
@@ -89,7 +103,7 @@ export default {
       }, {});
       return map;
     },
-    onInput({ key, label, option }) {
+    onInput({ key, option }) {
       // if key is empty - option was invalid
       if (key === undefined) return;
 
@@ -174,17 +188,6 @@ export default {
         // we need get value from this.options
         return vm.formattedOptions.find(item => `${item.key}` === key).option;
       });
-    },
-  },
-  created() {
-    this.selectedMap = this.buildSelectedMap(this.value);
-  },
-  watch: {
-    value(next) {
-      const prevMap = this.selectedMap;
-      const nextMap = this.buildSelectedMap(next);
-      if (isEqual(Object.keys(prevMap), Object.keys(nextMap))) return;
-      this.selectedMap = nextMap;
     },
   },
 };

@@ -3,7 +3,6 @@ import BaseRadioInputGroup from './BaseRadioInputGroup';
 export default {
   title: 'Radio/BaseRadioInputGroup',
   component: BaseRadioInputGroup,
-  component: BaseRadioInputGroup,
   argTypes: {
     id: {
       control: { type: 'text' },
@@ -73,7 +72,7 @@ export const ArrayOfObjects = args => {
   };
 };
 
-export const ArrayOfStrings = args => ({
+export const ArrayOfStrings = () => ({
   components: { BaseRadioInputGroup },
   props: ['value', 'options', 'change'],
   template: `
@@ -99,7 +98,7 @@ ArrayOfStrings.argTypes = {
   returnType: { table: { disable: true } },
 };
 
-export const ArrayOfNumbers = args => ({
+export const ArrayOfNumbers = () => ({
   components: { BaseRadioInputGroup },
   props: ['value', 'options', 'change'],
   template: `

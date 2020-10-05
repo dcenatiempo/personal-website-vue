@@ -72,7 +72,7 @@ export const ArrayOfObjects = args => {
   };
 };
 
-export const ArrayOfStrings = args => ({
+export const ArrayOfStrings = () => ({
   components: { BaseMultiCheckboxInput },
   props: ['value', 'options', 'change'],
   template: `
@@ -98,7 +98,7 @@ ArrayOfStrings.argTypes = {
   returnType: { table: { disable: true } },
 };
 
-export const ArrayOfNumbers = args => ({
+export const ArrayOfNumbers = () => ({
   components: { BaseMultiCheckboxInput },
   props: ['value', 'options', 'change'],
   template: `

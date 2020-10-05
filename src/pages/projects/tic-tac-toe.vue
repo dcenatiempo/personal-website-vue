@@ -6,6 +6,7 @@
 import TicTacToe from '~/components/projects/tic-tac-toe';
 export default {
   layout: 'projects',
+  components: { TicTacToe },
   head: {
     link: [
       {
@@ -18,6 +19,5 @@ export default {
       },
     ],
   },
-  components: { TicTacToe },
 };
 </script>

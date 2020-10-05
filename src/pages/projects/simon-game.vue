@@ -3,12 +3,12 @@
     <div class="screen">
       <div class="board">
         <div class="paddle-container">
-          <div v-for="button in buttons" class="paddles" :key="button.key">
+          <div v-for="button in buttons" :key="button.key" class="paddles">
             <svg height="100%" width="100%" viewBox="0 0 230 230">
               <path
-                @click="onClickPaddle(button)"
                 :fill="button.on ? button.colorOn : button.colorOff"
                 :d="button.path"
+                @click="onClickPaddle(button)"
               />
             </svg>
           </div>
@@ -79,18 +79,6 @@ function getRand(min, max) {
 
 export default {
   layout: 'projects',
-  head: {
-    link: [
-      {
-        href: 'https://fonts.googleapis.com/css?family=Alfa+Slab+One',
-        rel: 'stylesheet',
-      },
-      {
-        href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed',
-        rel: 'stylesheet',
-      },
-    ],
-  },
   data() {
     return {
       numCorrect: 0, // current number correct in round
@@ -149,6 +137,7 @@ export default {
       if (length <= 4) return 1;
       if (length <= 9) return 2;
       if (length <= 13) return 3;
+      return 4;
     },
   },
   methods: {
@@ -197,7 +186,7 @@ export default {
 
       // if correct button pressed...
       if (button.idx === this.sequence[this.numCorrect]) {
-        const audio = this.playSound(button.sound);
+        this.playSound(button.sound);
         button.on = true;
         vm.numCorrect += 1;
         sleep(600).then(() => {
@@ -251,7 +240,7 @@ export default {
       let i = 0;
       const vm = this;
       return sleep(500).then(() => {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
           const loop = setInterval(() => {
             const button = vm.buttons[vm.sequence[i]];
 
@@ -275,6 +264,18 @@ export default {
         });
       });
     },
+  },
+  head: {
+    link: [
+      {
+        href: 'https://fonts.googleapis.com/css?family=Alfa+Slab+One',
+        rel: 'stylesheet',
+      },
+      {
+        href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed',
+        rel: 'stylesheet',
+      },
+    ],
   },
 };
 </script>

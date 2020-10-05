@@ -1,17 +1,22 @@
 <template>
   <nav class="project-nav">
-    <a :href="`/projects/${prevLink}`" class="left-nav" title="previous project"
-      >&lt;prev project</a
+    <a
+      :href="`/projects/${prevLink}`"
+      class="left-nav"
+      title="previous project"
     >
+      &lt;prev project
+    </a>
     <a :href="thisLink" target="_blank" title="view code in GitHub">
       <img
         src="~/assets/images/github.svg"
         class="github-logo"
         alt="view code in GitHub"
-    /></a>
-    <a :href="`/projects/${nextLink}`" class="right-nav" title="next project"
-      >next project&gt;</a
-    >
+      />
+    </a>
+    <a :href="`/projects/${nextLink}`" class="right-nav" title="next project">
+      next project&gt;
+    </a>
   </nav>
 </template>
 

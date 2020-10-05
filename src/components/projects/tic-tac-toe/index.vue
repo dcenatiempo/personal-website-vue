@@ -3,32 +3,32 @@
     <div class="container">
       <h1>Tic-Tac-Toe</h1>
       <BaseSegmentedControl
+        v-model="intel"
         :segments="[
           { label: 'easy', value: -1 },
           { label: 'normal', value: 0 },
           { label: 'hard', value: 1 },
         ]"
-        v-model="intel"
       />
       <div class="seg-wrapper">
         <button
-          @click="setDifficultyLevel(-1)"
           class="seg-control intel"
           :class="{ selected: intel === -1 }"
+          @click="setDifficultyLevel(-1)"
         >
           easy
         </button>
         <button
-          @click="setDifficultyLevel(0)"
           class="seg-control intel"
           :class="{ selected: intel === 0 }"
+          @click="setDifficultyLevel(0)"
         >
           normal
         </button>
         <button
-          @click="setDifficultyLevel(1)"
           class="seg-control intel"
           :class="{ selected: intel === 1 }"
+          @click="setDifficultyLevel(1)"
         >
           absurd
         </button>
@@ -36,31 +36,31 @@
       <div id="screen" class="container">
         <div v-if="gameStarted" class="board">
           <!-- player[whosTurn(board)] -->
-          <button @click="onPickSquare(0)" class="cell">
+          <button class="cell" @click="onPickSquare(0)">
             {{ player[board[0]] }}
           </button>
-          <button @click="onPickSquare(1)" class="cell">
+          <button class="cell" @click="onPickSquare(1)">
             {{ player[board[1]] }}
           </button>
-          <button @click="onPickSquare(2)" class="cell">
+          <button class="cell" @click="onPickSquare(2)">
             {{ player[board[2]] }}
           </button>
-          <button @click="onPickSquare(3)" class="cell">
+          <button class="cell" @click="onPickSquare(3)">
             {{ player[board[3]] }}
           </button>
-          <button @click="onPickSquare(4)" class="cell">
+          <button class="cell" @click="onPickSquare(4)">
             {{ player[board[4]] }}
           </button>
-          <button @click="onPickSquare(5)" class="cell">
+          <button class="cell" @click="onPickSquare(5)">
             {{ player[board[5]] }}
           </button>
-          <button @click="onPickSquare(6)" class="cell">
+          <button class="cell" @click="onPickSquare(6)">
             {{ player[board[6]] }}
           </button>
-          <button @click="onPickSquare(7)" class="cell">
+          <button class="cell" @click="onPickSquare(7)">
             {{ player[board[7]] }}
           </button>
-          <button @click="onPickSquare(8)" class="cell">
+          <button class="cell" @click="onPickSquare(8)">
             {{ player[board[8]] }}
           </button>
         </div>
@@ -217,7 +217,7 @@ function minimax({ board = FRESH_BOARD, depth = 0, human = 0, intel = -1 }) {
     var bArray = actions(board);
     var bNew;
     var bMin = 1000;
-    for (var i = 0; i < bArray.length; i++) {
+    for (let i = 0; i < bArray.length; i++) {
       bNew = minimax({
         board: results(board, bArray[i]),
         depth: depth + 1,
@@ -330,18 +330,6 @@ const FRESH_BOARD = [
 
 export default {
   layout: 'projects',
-  head: {
-    link: [
-      {
-        href: 'https://fonts.googleapis.com/css?family=Permanent+Marker',
-        rel: 'stylesheet',
-      },
-      {
-        href: 'https://fonts.googleapis.com/css?family=Averia+Libre:700',
-        rel: 'stylesheet',
-      },
-    ],
-  },
   data() {
     return {
       isPlayerTurn: false,
@@ -452,6 +440,18 @@ export default {
       }
       sleep(2000).then(() => vm.reset());
     },
+  },
+  head: {
+    link: [
+      {
+        href: 'https://fonts.googleapis.com/css?family=Permanent+Marker',
+        rel: 'stylesheet',
+      },
+      {
+        href: 'https://fonts.googleapis.com/css?family=Averia+Libre:700',
+        rel: 'stylesheet',
+      },
+    ],
   },
 };
 </script>

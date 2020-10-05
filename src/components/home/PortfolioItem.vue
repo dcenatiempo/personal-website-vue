@@ -6,6 +6,7 @@
       :href="link"
       :style="`background-image: url('${image}')`"
     >
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <span class="content" v-html="content" />
     </a>
   </figure>
@@ -13,14 +14,14 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     title: { type: String, default: 'Title' },
     content: { type: String, default: 'Content`' },
     link: { type: String, default: '#' },
     image: { type: String, default: '' },
+  },
+  data() {
+    return {};
   },
 };
 </script>

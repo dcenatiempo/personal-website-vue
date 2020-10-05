@@ -13,12 +13,12 @@ export const mutations = {
 };
 
 export const actions = {
-  someAction: ({
-    state,
-    rootState,
-    commit,
-    dispatch,
-    getters,
-    rootGetters,
-  }) => {},
+  // someAction: ({
+  //   state,
+  //   rootState,
+  //   commit,
+  //   dispatch,
+  //   getters,
+  //   rootGetters,
+  // }) => {},
 };

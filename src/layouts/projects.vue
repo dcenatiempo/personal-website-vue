@@ -3,9 +3,9 @@
     <MainHeader />
     <nuxt />
     <ProjectNav
-      :thisLink="projects[currentIndex].link"
-      :prevLink="projects[prevIndex].route"
-      :nextLink="projects[nextIndex].route"
+      :this-link="projects[currentIndex].link"
+      :prev-link="projects[prevIndex].route"
+      :next-link="projects[nextIndex].route"
     />
     <MainFooter />
   </div>

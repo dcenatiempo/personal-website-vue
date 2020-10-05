@@ -4,9 +4,9 @@
     :class="localExpanded ? 'expanded' : ''"
     @click="toggleHamburger"
   >
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
+    <div class="bar1" />
+    <div class="bar2" />
+    <div class="bar3" />
   </BaseButton>
 </template>
 
@@ -15,16 +15,13 @@ import BaseButton from '~/components/base/BaseButton.vue';
 
 export default {
   components: { BaseButton },
+  props: {
+    expanded: { type: Boolean, default: false },
+  },
   data() {
     return {
       localExpanded: false,
     };
-  },
-  props: {
-    /**
-    The expanded state of the button
-    */
-    expanded: { type: Boolean, default: false },
   },
   watch: {
     expanded(val) {

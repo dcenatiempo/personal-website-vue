@@ -61,7 +61,7 @@
             class="markdown"
             target="_blank"
             href="./markdown-previewer/index.html"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Random Quote Machine</h3>
@@ -69,7 +69,7 @@
             class="quotes"
             target="_blank"
             href="./random-quote-machine/index.html"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Basic Calculator</h3>
@@ -77,7 +77,7 @@
             class="calculator"
             target="_blank"
             href="./basic-calculator/index.html"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Wikipedia Search</h3>
@@ -85,7 +85,7 @@
             class="wikipedia"
             target="_blank"
             href="./wikipedia-search/index.html"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Rogue-Like</h3>
@@ -93,7 +93,7 @@
             class="rogue-like"
             target="_blank"
             href="https://codepen.io/dcenatiempo/pen/ayWxBR/"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Conway's Game of Life</h3>
@@ -101,7 +101,7 @@
             class="game-of-life"
             target="_blank"
             href="https://codepen.io/dcenatiempo/pen/zdOzrL/"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Recipe Box</h3>
@@ -109,7 +109,7 @@
             class="recipe"
             target="_blank"
             href="https://codepen.io/dcenatiempo/pen/awrgMZ/"
-          ></a>
+          />
         </figure>
         <figure>
           <h3>Meteorite Crash Sites</h3>
@@ -117,7 +117,7 @@
             class="meteorite"
             target="_blank"
             href="https://codepen.io/dcenatiempo/pen/QMxVJQ/"
-          ></a>
+          />
         </figure>
       </div>
     </section>
@@ -136,9 +136,12 @@
           <a target="_blank" href="https://github.com/dcenatiempo">GitHub</a>
         </button>
         <button>
-          <a target="_blank" href="https://www.linkedin.com/in/devincenatiempo/"
-            >Linkedin</a
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/devincenatiempo/"
           >
+            Linkedin
+          </a>
         </button>
       </div>
     </section>

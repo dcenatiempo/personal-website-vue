@@ -3,9 +3,9 @@
     <button
       v-for="(segment, i) in segments"
       :key="segment"
-      @click="onClick(i)"
       class="segment"
       :class="{ selected: selected === i }"
+      @click="onClick(i)"
     >
       {{ segment }}
     </button>
@@ -28,17 +28,17 @@ export default {
       localSelectedIndex: 0,
     };
   },
+  watch: {
+    selectedIndex(selectedIndex) {
+      if (selectedIndex === this.localSelectedIndex) return;
+      this.localSelectedIndex = selectedIndex;
+    },
+  },
   methods: {
     onClick(i) {
       if (i === this.localSelectedIndex) return;
       this.localSelectedIndex = i;
       this.$emit('change', i);
-    },
-  },
-  watch: {
-    selectedIndex(selectedIndex) {
-      if (selectedIndex === this.localSelectedIndex) return;
-      this.localSelectedIndex = selectedIndex;
     },
   },
 };

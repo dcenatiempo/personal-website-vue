@@ -2,8 +2,8 @@
   <fieldset class="base-radio-input-group">
     <template v-for="option in formattedOptions">
       <BaseRadioButton
-        :key="option.key"
         :id="id + '-' + option.key"
+        :key="option.key"
         :name="id"
         :checked="isSelected(option)"
         :label="`${option.label}`"
@@ -26,7 +26,7 @@ export default {
   props: {
     id: { type: [Number, String], required: true },
     options: { type: [Array], default: () => [] },
-    value: { type: [Object, String, Number] },
+    value: { type: [Object, String, Number], default: null },
     labelExtractor: { type: [String, Function], default: item => item },
     keyExtractor: { type: [String, Function], default: item => item },
     required: {
@@ -40,7 +40,7 @@ export default {
     returnType: {
       type: String,
       default: 'value',
-      validator: type => ['key', 'value'],
+      validator: type => ['key', 'value'].includes(type),
     },
   },
   data() {
@@ -56,6 +56,15 @@ export default {
         option: item,
       }));
     },
+  },
+  watch: {
+    value(value) {
+      if (value === this.localValue) return;
+      this.localValue = value;
+    },
+  },
+  created() {
+    this.localValue = this.value;
   },
   methods: {
     isSelected(option) {
@@ -101,15 +110,6 @@ export default {
     getReturnValue(option) {
       if (this.returnType === 'key') return this.getKey(option);
       return option;
-    },
-  },
-  created() {
-    this.localValue = this.value;
-  },
-  watch: {
-    value(value) {
-      if (value === this.localValue) return;
-      this.localValue = value;
     },
   },
 };

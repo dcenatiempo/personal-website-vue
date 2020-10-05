@@ -6,6 +6,7 @@
     "generate": "nuxt generate",
     "start": "nuxt start",
     "test": "./node_modules/.bin/jest",
+    "lint": "./node_modules/.bin/eslint src",
     "storybook": "npx nuxt storybook"
   },
   "dependencies": {

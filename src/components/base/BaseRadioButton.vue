@@ -4,12 +4,12 @@
     :class="{ disabled, required, checked: localChecked }"
   >
     <input
-      type="radio"
       :id="id"
+      type="radio"
       :name="name"
       :checked="localChecked"
-      @click.prevent="onClick"
       :disabled="disabled"
+      @click.prevent="onClick"
     />
     <label :for="id">
       {{ label }}
@@ -21,7 +21,7 @@
 export default {
   props: {
     id: { type: [Number, String], required: true },
-    name: { type: String },
+    name: { type: String, default: '' },
     checked: {
       type: [Boolean, Number],
       default: false,
@@ -29,7 +29,7 @@ export default {
     },
     disabled: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
-    label: { type: [String] },
+    label: { type: [String], default: '' },
     returnType: {
       type: String,
       default: 'boolean',
@@ -42,21 +42,6 @@ export default {
     };
   },
   computed: {},
-  methods: {
-    onClick() {
-      if (this.disabled) return;
-      if (this.required && this.localChecked) return;
-      this.localChecked = !this.localChecked;
-      this.emitChange();
-    },
-    formatReturn(val) {
-      if (this.returnType === 'binary') return +this.localChecked;
-      return this.localChecked;
-    },
-    emitChange() {
-      this.$emit('change', this.formatReturn(this.localChecked));
-    },
-  },
   watch: {
     checked(nextChecked) {
       if (nextChecked === this.localChecked) return;
@@ -68,6 +53,21 @@ export default {
   },
   created() {
     this.localChecked = !!this.checked;
+  },
+  methods: {
+    onClick() {
+      if (this.disabled) return;
+      if (this.required && this.localChecked) return;
+      this.localChecked = !this.localChecked;
+      this.emitChange();
+    },
+    formatReturn() {
+      if (this.returnType === 'binary') return +this.localChecked;
+      return this.localChecked;
+    },
+    emitChange() {
+      this.$emit('change', this.formatReturn(this.localChecked));
+    },
   },
 };
 </script>

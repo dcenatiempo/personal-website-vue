@@ -3,6 +3,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
+    jest: true,
   },
   parserOptions: {
     parser: 'babel-eslint',
@@ -16,10 +17,30 @@ module.exports = {
   plugins: ['vue'],
   // add your custom rules here
   rules: {
-    semi: [2, 'never'],
+    semi: [2, 'always'],
     'no-console': 'off',
     'vue/max-attributes-per-line': 'off',
-    'prettier/prettier': ['error', { semi: true }],
-    quotes: 'single',
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always',
+        },
+        svg: 'always',
+        math: 'always',
+      },
+    ],
+    'prettier/prettier': [
+      'error',
+      {
+        semi: true,
+        singleQuote: true,
+        arrowParens: 'avoid',
+      },
+    ],
+    quotes: [2, 'single', { avoidEscape: true }],
   },
 };
