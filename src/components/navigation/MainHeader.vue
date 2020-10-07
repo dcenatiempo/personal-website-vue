@@ -8,7 +8,7 @@
       />
       <nav class="header-nav">
         <HamburgerButton
-          v-if="viewport.w <= breakpoint"
+          v-show="isSmallScreen"
           :expanded="expanded"
           style="z-index: 10"
           @click="val => (expanded = val)"
@@ -17,7 +17,7 @@
           class="nav-links"
           :class="{
             expanded: expanded,
-            'small-screen': viewport.w <= breakpoint,
+            'small-screen': isSmallScreen,
           }"
         >
           <li>
@@ -47,6 +47,11 @@ export default {
       breakpoint: 700,
     };
   },
+  computed: {
+    isSmallScreen() {
+      return this.viewport.w <= this.breakpoint;
+    },
+  },
   watch: {
     'viewport.w'(w) {
       if (!this.expanded) return;
@@ -54,10 +59,8 @@ export default {
       this.expanded = false;
     },
   },
-  created() {
-    if (process.client) {
-      this.viewport = this.$viewport;
-    }
+  mounted() {
+    this.viewport = process.client ? this.$viewport : { w: 0, h: 0 };
   },
   methods: {},
 };
