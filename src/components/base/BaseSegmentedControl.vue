@@ -1,51 +1,138 @@
 <template>
-  <div class="segmented-control">
-    <button
-      v-for="(segment, i) in segments"
-      :key="segment"
-      class="segment"
-      :class="{ selected: selected === i }"
-      @click="onClick(i)"
-    >
-      {{ segment }}
-    </button>
+  <div class="base-segmented-control">
+    <template v-for="option in formattedOptions">
+      <BaseSegment
+        :id="id + '-' + option.key"
+        :key="option.key"
+        :name="id"
+        :checked="isSelected(option)"
+        :label="`${option.label}`"
+        :required="required && isSelected(option) && !!localValue"
+        :disabled="disabled"
+        @change="onInput(option)"
+      />
+    </template>
   </div>
 </template>
 
 <script>
-// https://developer.apple.com/design/human-interface-guidelines/ios/controls/segmented-controls/
+import get from 'lodash/get';
+import BaseSegment from './BaseSegment';
+
 export default {
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+  // model: {
+  //   prop: 'value',
+  //   event: 'change',
+  // },
+  components: { BaseSegment },
   props: {
-    segments: { type: Array, default: () => ['Yes', 'No'] },
-    selectedIndex: { type: Number, default: 0 },
+    id: { type: [Number, String], required: true },
+    options: { type: [Array], default: () => [] },
+    value: { type: [Object, String, Number], default: null },
+    labelExtractor: { type: [String, Function], default: item => item },
+    keyExtractor: { type: [String, Function], default: item => item },
+    required: {
+      type: Boolean,
+      default: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    returnType: {
+      type: String,
+      default: 'value',
+      validator: type => ['key', 'value'].includes(type),
+    },
   },
   data() {
     return {
-      localSelectedIndex: 0,
+      localValue: null,
     };
   },
-  watch: {
-    selectedIndex(selectedIndex) {
-      if (selectedIndex === this.localSelectedIndex) return;
-      this.localSelectedIndex = selectedIndex;
+  computed: {
+    formattedOptions() {
+      return this.options.map(item => ({
+        key: this.getKey(item),
+        label: this.getLabel(item),
+        option: item,
+      }));
     },
   },
+  watch: {
+    value(value) {
+      if (value === this.localValue) return;
+      this.localValue = value;
+    },
+  },
+  created() {
+    this.localValue = this.value;
+  },
   methods: {
-    onClick(i) {
-      if (i === this.localSelectedIndex) return;
-      this.localSelectedIndex = i;
-      this.$emit('change', i);
+    isSelected(option) {
+      return option.key === this.getKey(this.localValue);
+    },
+    onInput(option) {
+      // invalid input
+      if (!option || option.key === undefined) return;
+
+      // if already checked, we might need to un-check it
+      if (this.getKey(this.localValue) === option.key) {
+        if (this.required) return;
+        this.localValue = null;
+      }
+
+      // otherwise check the un-checked option
+      else {
+        this.localValue = option.option;
+      }
+
+      this.$emit('change', this.getReturnValue(this.localValue));
+    },
+    getLabel(option) {
+      if (
+        (typeof option === 'string' || typeof option === 'number') &&
+        !this.labelExtractor
+      ) {
+        return option;
+      }
+
+      if (typeof this.labelExtractor === 'function') {
+        return this.labelExtractor(option);
+      }
+
+      if (typeof this.labelExtractor === 'string') {
+        return get(option, this.labelExtractor, '');
+      }
+
+      return '';
+    },
+    getKey(option) {
+      if (typeof option === 'string' || typeof option === 'number') {
+        return option;
+      }
+
+      if (typeof this.keyExtractor === 'function') {
+        return this.keyExtractor(option);
+      }
+
+      if (typeof this.keyExtractor === 'string') {
+        return get(option, this.keyExtractor, JSON.stringify(option));
+      }
+
+      return JSON.stringify(option);
+    },
+    getReturnValue(option) {
+      if (this.returnType === 'key') return this.getKey(option);
+      return option;
     },
   },
 };
 </script>
 
 <style lang="scss">
-.segmented-control {
+.base-segmented-control {
+  padding: 0;
   background-color: #1a8cff;
   border-radius: 7px;
   border: 1px solid #1a8cff;
@@ -53,26 +140,8 @@ export default {
   flex-flow: row nowrap;
   overflow: hidden;
 
-  .segment {
-    border: none;
-    border-right: 1px solid #1a8cff;
-    background-color: white;
-    color: #1a8cff;
-    text-align: center;
-
-    &:last-child {
-      border-right: none;
-    }
-
-    &.selected {
-      background-color: #1a8cff;
-      color: white;
-    }
-
-    &:hover {
-      background-color: #1a8cff;
-      color: white;
-    }
+  .base-segment {
+    flex: 1;
   }
 }
 </style>
