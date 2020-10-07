@@ -3,74 +3,60 @@
     <div class="container">
       <h1>Tic-Tac-Toe</h1>
       <BaseSegmentedControl
+        id="intel"
         v-model="intel"
-        :segments="[
+        class="intel"
+        :options="[
           { label: 'easy', value: -1 },
           { label: 'normal', value: 0 },
           { label: 'hard', value: 1 },
         ]"
+        label-extractor="label"
+        key-extractor="value"
+        return-type="key"
+        required
       />
-      <div class="seg-wrapper">
-        <button
-          class="seg-control intel"
-          :class="{ selected: intel === -1 }"
-          @click="setDifficultyLevel(-1)"
-        >
-          easy
-        </button>
-        <button
-          class="seg-control intel"
-          :class="{ selected: intel === 0 }"
-          @click="setDifficultyLevel(0)"
-        >
-          normal
-        </button>
-        <button
-          class="seg-control intel"
-          :class="{ selected: intel === 1 }"
-          @click="setDifficultyLevel(1)"
-        >
-          absurd
-        </button>
-      </div>
       <div id="screen" class="container">
         <div v-if="gameStarted" class="board">
           <!-- player[whosTurn(board)] -->
           <button class="cell" @click="onPickSquare(0)">
-            {{ player[board[0]] }}
+            {{ board[0] }}
           </button>
           <button class="cell" @click="onPickSquare(1)">
-            {{ player[board[1]] }}
+            {{ board[1] }}
           </button>
           <button class="cell" @click="onPickSquare(2)">
-            {{ player[board[2]] }}
+            {{ board[2] }}
           </button>
           <button class="cell" @click="onPickSquare(3)">
-            {{ player[board[3]] }}
+            {{ board[3] }}
           </button>
           <button class="cell" @click="onPickSquare(4)">
-            {{ player[board[4]] }}
+            {{ board[4] }}
           </button>
           <button class="cell" @click="onPickSquare(5)">
-            {{ player[board[5]] }}
+            {{ board[5] }}
           </button>
           <button class="cell" @click="onPickSquare(6)">
-            {{ player[board[6]] }}
+            {{ board[6] }}
           </button>
           <button class="cell" @click="onPickSquare(7)">
-            {{ player[board[7]] }}
+            {{ board[7] }}
           </button>
           <button class="cell" @click="onPickSquare(8)">
-            {{ player[board[8]] }}
+            {{ board[8] }}
           </button>
         </div>
 
         <template v-else>
           <h2>Choose your mark:</h2>
-          <div class="seg-wrapper">
-            <button class="seg-control xo" @click="onChooseX">X</button>
-            <button class="seg-control xo" @click="onChooseO">O</button>
-          </div>
+          <BaseSegmentedControl
+            id="xo"
+            class="xo"
+            :options="['x', 'o']"
+            :label-extractor="item => item.toUpperCase()"
+            @change="onChooseMark"
+          />
         </template>
       </div>
 
@@ -103,9 +89,9 @@ function getRand(min, max) {
 function whosTurn(board) {
   const count = board.filter(space => space !== null).length;
   // if even # of empty spaces, it is O's turn
-  if (count % 2 === 0) return 0;
+  if (count % 2 === 0) return 'x';
   // if odd # of empty spaces, it is X's turn - X always goes first
-  else return 1;
+  else return 'o';
 }
 
 // given board, returns an array of empty spaces on board
@@ -129,7 +115,7 @@ function randCell(board) {
 }
 
 // returns space of next move for AI
-function nextAiMove({ board = FRESH_BOARD, intel = -1, human = 0 }) {
+function nextAiMove({ board = FRESH_BOARD, intel = -1, human = 'x' }) {
   // if intel is -1, pick random cell
   if (intel === -1) return randCell(board);
   // determines round#
@@ -173,10 +159,10 @@ function nextAiMove({ board = FRESH_BOARD, intel = -1, human = 0 }) {
 
 // determins winnder from board state
 function isWinner(board) {
-  var playa = Math.abs(whosTurn(board) - 1);
+  var playa = whosTurn(board) === 'x' ? 'o' : 'x';
   var util = utility(board, playa);
   if (util === 100) return playa;
-  if (util === 0) return 2;
+  if (util === 0) return 'draw';
   return null;
 }
 
@@ -193,7 +179,7 @@ function isWinner(board) {
  * decision rules for minimizing the possible loss for a
  * worst case (maximum loss) scenario.
  *************************************************************/
-function minimax({ board = FRESH_BOARD, depth = 0, human = 0, intel = -1 }) {
+function minimax({ board = FRESH_BOARD, depth = 0, human = 'x', intel = -1 }) {
   if (depth >= intel) {
     // only go as deep as inteligence
     return utility(board, human);
@@ -234,7 +220,7 @@ function minimax({ board = FRESH_BOARD, depth = 0, human = 0, intel = -1 }) {
  * utility()
  * returns utility of board for player p
  *************************************************************/
-function utility(board, p) {
+function utility(board, human = 'x') {
   var tCount = 0; // total number of occupied squares
   var pCount = 0; // counter for player p squares
   var nCount = 0; // counter for empty/null squares
@@ -249,7 +235,7 @@ function utility(board, p) {
   for (var i = 0; i < win.length; i++) {
     // loop through each win condition
     for (var j = 0; j < win[i].length; j++) {
-      if (board[win[i][j]] == p) pCount++;
+      if (board[win[i][j]] === human) pCount++;
       else if (board[win[i][j]] == null) nCount++;
     }
     if (pCount + nCount == 3) {
@@ -340,7 +326,7 @@ export default {
       // 2 players 0='X' 1='O'
       player: ['X', 'O'],
       // is human 'X' or 'O'?
-      human: 0,
+      human: 'x',
       // how smart is AI - depth to search
       intel: 0,
       // playing board
@@ -403,16 +389,15 @@ export default {
         sleep(500).then(() => vm.endGame(winner));
       });
     },
-    onChooseX() {
-      this.human = 0;
+    onChooseMark(mark) {
+      this.human = mark;
+
       this.gameStarted = true;
-      this.isPlayerTurn = true;
-    },
-    onChooseO() {
+      this.isPlayerTurn = mark === 'x';
+
+      if (this.isPlayerTurn) return;
+
       const vm = this;
-      this.human = 1;
-      this.gameStarted = true;
-      this.isPlayerTurn = false;
       sleep(500).then(() => {
         vm.assignCell(
           nextAiMove({
@@ -431,7 +416,7 @@ export default {
       const vm = this;
       this.gameOver = true;
 
-      if (result === 2) {
+      if (result === 'draw') {
         this.gameOverResult = 'draw';
       } else if (result == this.human) {
         this.gameOverResult = 'win';
@@ -486,18 +471,21 @@ export default {
     align-items: center;
   }
 
-  .intel {
+  .intel .base-segment {
     height: 40px;
     width: 100px;
     font-size: 1.3em;
   }
 
-  .xo {
+  .xo .base-segment {
     height: 80px;
     width: 80px;
-    font-family: 'Permanent Marker', cursive;
-    font-size: 55px;
-    line-height: 0;
+
+    label {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 55px;
+      line-height: 0;
+    }
   }
 
   h1 {
