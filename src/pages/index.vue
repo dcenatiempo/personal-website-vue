@@ -79,14 +79,12 @@
             href="./basic-calculator/index.html"
           />
         </figure>
-        <figure>
-          <h3>Wikipedia Search</h3>
-          <a
-            class="wikipedia"
-            target="_blank"
-            href="./wikipedia-search/index.html"
-          />
-        </figure>
+        <PortfolioItem
+          title="Wikipedia Search"
+          content="Another clean, simple application. Search for anything!<br/><br/>Skills Used: AJAX, Responsive Layout"
+          link="/projects/wikipedia-search"
+          image="/images/wikipedia-screen-shot.png"
+        />
         <figure>
           <h3>Rogue-Like</h3>
           <a

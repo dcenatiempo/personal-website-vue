@@ -27,6 +27,11 @@ const projects = [
     link:
       'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/tic-tac-toe.vue',
   },
+  {
+    route: 'wikipedia-search',
+    link:
+      'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/wikipedia-search.vue',
+  },
 ];
 
 export default {
@@ -68,6 +73,7 @@ export default {
   align-content: flex-start;
   background-color: #e2d7d3;
   height: 100vh;
+  padding: 60px 0 0;
 
   main {
     flex: 1;
