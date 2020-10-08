@@ -1,11 +1,17 @@
 <template>
   <button class="base-button" @click="$emit('click', $event)">
-    <slot />
+    <slot>
+      {{ label }}
+    </slot>
   </button>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    label: { type: [Number, String], default: '' },
+  },
+};
 </script>
 
 <style lang="scss">

@@ -32,6 +32,10 @@ const projects = [
     link:
       'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/wikipedia-search.vue',
   },
+  {
+    route: 'basic-calculator',
+    link: '',
+  },
 ];
 
 export default {
@@ -60,6 +64,26 @@ export default {
       next = next >= projects.length ? 0 : next;
       return next;
     },
+  },
+  head: {
+    link: [
+      {
+        href: 'https://fonts.googleapis.com/css?family=Alfa+Slab+One',
+        rel: 'stylesheet',
+      },
+      {
+        href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed',
+        rel: 'stylesheet',
+      },
+      {
+        href: 'https://fonts.googleapis.com/css?family=Averia+Libre:700',
+        rel: 'stylesheet',
+      },
+      {
+        href: 'https://fonts.googleapis.com/css?family=Permanent+Marker',
+        rel: 'stylesheet',
+      },
+    ],
   },
 };
 </script>
