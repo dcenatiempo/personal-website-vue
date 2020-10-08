@@ -3,22 +3,27 @@
     <div class="screen">
       <div class="board">
         <div class="paddle-container">
-          <div v-for="button in buttons" :key="button.key" class="paddles">
-            <svg height="100%" width="100%" viewBox="0 0 230 230">
-              <path
-                :fill="button.on ? button.colorOn : button.colorOff"
-                :d="button.path"
-                @click="onClickPaddle(button)"
-              />
-            </svg>
-          </div>
+          <SimonPaddle
+            v-for="paddle in paddles"
+            :ref="paddle.key"
+            :key="paddle.key"
+            :paddle="paddle"
+            :active="paddle.idx === nextPaddleInSequence"
+            :disabled="isDeviceTurn || !gameHasStarted"
+            class="paddles"
+            @strict-buzzer-finished="playSequence"
+            @click="onClickPaddle(paddle)"
+          />
         </div>
+
         <div class="center-console">
           <div class="control-container">
             <div class="control-logo">simon</div>
+
             <div class="control-display">
               <div class="score">{{ score }}</div>
             </div>
+
             <div class="control-buttons">
               <div class="button-control">
                 <button class="small-button" @click="initiateGame" />
@@ -41,10 +46,6 @@
 </template>
 
 <script>
-const clicky =
-  'http://res.cloudinary.com/dcenatiempo/video/upload/v1499727069/click_rnmyzb.wav';
-const buzzer =
-  'http://res.cloudinary.com/dcenatiempo/video/upload/v1499571473/buzzer_cogzhf.m4a';
 const tones = {
   eLower:
     'http://res.cloudinary.com/dcenatiempo/video/upload/v1499548753/green_cl8zdp.m4a',
@@ -76,18 +77,19 @@ function getRand(min, max) {
   //The maximum is inclusive and the minimum is inclusive
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
+import SimonPaddle from './SimonPaddle';
 export default {
+  components: { SimonPaddle },
   layout: 'projects',
   data() {
     return {
       numCorrect: 0, // current number correct in round
-      winScore: 20, // number of rounds to win
+      roundsNeededToWin: 3, // number of rounds to win
       isDeviceTurn: true, // disable player actions
       strictMode: false, // one wrong move, game over
       gameHasStarted: false,
       sequence: [], // sequence of colord paddle indexes
-      buttons: [
+      paddles: [
         {
           idx: 0,
           key: '0-green-upper-left',
@@ -95,7 +97,7 @@ export default {
           colorOff: '#00b359',
           colorOn: '#99ffcc',
           path: paths.upperLeft,
-          on: false,
+          play: false,
         },
         {
           idx: 1,
@@ -104,7 +106,7 @@ export default {
           colorOff: '#cc3300',
           colorOn: '#ffc266',
           path: paths.upperRight,
-          on: false,
+          play: false,
         },
         {
           idx: 2,
@@ -113,7 +115,7 @@ export default {
           colorOff: '#e6e600',
           colorOn: '#ffffb3',
           path: paths.lowerLeft,
-          on: false,
+          play: false,
         },
         {
           idx: 3,
@@ -122,7 +124,7 @@ export default {
           colorOff: '#1a75ff',
           colorOn: '#66ffff',
           path: paths.lowerRight,
-          on: false,
+          play: false,
         },
       ],
     };
@@ -139,96 +141,66 @@ export default {
       if (length <= 13) return 3;
       return 4;
     },
+    nextPaddleInSequence() {
+      return this.sequence[this.numCorrect];
+    },
+    paddleRefs() {
+      return Object.values(this.$refs).map(ref => ref[0]);
+    },
   },
   methods: {
-    playSound(sound) {
-      if (sound) {
-        const audio = new Audio(sound);
-        audio.play();
-        return audio;
-      }
-    },
     win() {
       // when player wins, the paddles do a happy dance
       this.isDeviceTurn = true;
       this.gameHasStarted = false;
+      const vm = this;
       const winning = setInterval(() => {
-        this.buttons.forEach(button => (button.on = true));
-        sleep(100).then(() => this.resetButtons());
+        vm.paddleRefs.forEach(paddle => paddle.lightUp(100));
       }, 200);
 
       sleep(4000).then(() => {
-        this.resetButtons();
         clearInterval(winning);
-      });
-    },
-    resetButtons() {
-      this.buttons.forEach(button => {
-        button.on = false;
       });
     },
     toggleStrictMode() {
       this.strictMode = !this.strictMode;
     },
     initiateGame() {
-      this.resetButtons();
       this.gameHasStarted = true;
       this.isDeviceTurn = true;
       this.sequence = [];
       this.numCorrect = 0;
       this.doDeviceTurn();
     },
-    onClickPaddle(button) {
+    onClickPaddle(paddle) {
       const vm = this;
-      this.playSound(clicky);
 
+      // is it the player's turn?
       if (this.isDeviceTurn || !this.gameHasStarted) return;
 
-      // if correct button pressed...
-      if (button.idx === this.sequence[this.numCorrect]) {
-        this.playSound(button.sound);
-        button.on = true;
+      // if correct paddle pressed...
+      if (paddle.idx === this.nextPaddleInSequence) {
         vm.numCorrect += 1;
-        sleep(600).then(() => {
-          button.on = false;
-        });
 
         // if player is not done with sequence for current round
         if (vm.numCorrect !== vm.sequence.length) return;
 
         // if player got entire sequence correct in current (but not last) round
-        if (vm.numCorrect < vm.winScore) return vm.doDeviceTurn();
+        if (vm.numCorrect < vm.roundsNeededToWin) return vm.doDeviceTurn();
 
         // if player got last squence correct in last round
         return vm.win();
       }
 
-      // else if wrong button pressed in strict mode...
+      // else if wrong paddle pressed in strict mode...
       if (this.strictMode) {
         this.gameHasStarted = false;
         this.isDeviceTurn = true;
-        button.on = true;
-        let audio = this.playSound(buzzer);
-        sleep(2500).then(() => {
-          button.on = false;
-          audio.pause();
-        });
         return;
       }
 
-      // else if wrong button pressed NOT in strict mode...
+      // else if wrong paddle pressed NOT in strict mode...
       this.numCorrect = 0;
-      button.on = true;
-      let audio = this.playSound(buzzer);
-      sleep(1000)
-        .then(() => {
-          button.on = false;
-          audio.pause();
-          return sleep(800);
-        })
-        .then(() => {
-          this.playSequence();
-        });
     },
     doDeviceTurn() {
       this.sequence = [...this.sequence, getRand(0, 3)];
@@ -239,30 +211,31 @@ export default {
       this.isDeviceTurn = true;
       let i = 0;
       const vm = this;
-      return sleep(500).then(() => {
-        return new Promise(resolve => {
-          const loop = setInterval(() => {
-            const button = vm.buttons[vm.sequence[i]];
+      return sleep(500)
+        .then(() => {
+          return new Promise(resolve => {
+            const loop = setInterval(() => {
+              const paddle = vm.paddleRefs[vm.sequence[i]];
 
-            // turn light/sound on
-            button.on = true;
-            const audio = vm.playSound(button.sound);
+              // play paddle
+              const ms = 550 - vm.speed * 100;
+              const cutOffSound = true;
+              paddle.play(ms, cutOffSound).then(() => {
+                // advance sequence
+                i += 1;
 
-            //turn light off, stop sound
-            sleep(550 - vm.speed * 100).then(() => {
-              audio.pause();
-              button.on = false;
-              i += 1;
-
-              if (i === vm.sequence.length) {
-                vm.isDeviceTurn = false;
-                clearInterval(loop);
-                resolve();
-              }
-            });
-          }, 650 - vm.speed * 100);
+                // check to see if we are at the end
+                if (i === vm.sequence.length) {
+                  clearInterval(loop);
+                  resolve();
+                }
+              });
+            }, 650 - vm.speed * 100);
+          });
+        })
+        .then(() => {
+          vm.isDeviceTurn = false;
         });
-      });
     },
   },
   head: {
@@ -387,21 +360,10 @@ export default {
       }
 
       .paddle-container {
-        border: none;
-        border-color: yellow;
         height: 100%;
         width: 100%;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        align-content: space-between;
-
-        .paddles {
-          height: 50%;
-          width: 50%;
-          border: none;
-          border-color: orange;
-        }
+        display: grid;
+        grid-template-columns: 1fr 1fr;
       }
     }
   }
