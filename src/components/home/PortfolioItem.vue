@@ -1,14 +1,10 @@
 <template>
   <figure class="portfolio-item">
     <h3>{{ title }}</h3>
-    <a
-      target="_blank"
-      :href="link"
-      :style="`background-image: url('${image}')`"
-    >
+    <nuxt-link :to="link" :style="`background-image: url('${image}')`">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <span class="content" v-html="content" />
-    </a>
+    </nuxt-link>
   </figure>
 </template>
 

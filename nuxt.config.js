@@ -1,4 +1,5 @@
 export default {
+  mode: 'spa',
   target: 'static',
   srcDir: 'src/',
   css: ['assets/css/normalize.css', 'assets/css/global.scss'],

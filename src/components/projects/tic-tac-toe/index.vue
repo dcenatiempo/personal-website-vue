@@ -454,16 +454,6 @@ export default {
   body {
     padding-bottom: 90px; /* make room for project navigation*/
   }
-  button {
-    padding: 0;
-
-    &:focus {
-      outline: none;
-    }
-    &:focus-within::after {
-      content: unset;
-    }
-  }
 
   .container {
     display: flex;
@@ -512,12 +502,19 @@ export default {
     box-shadow: inset 0 0 0 2px white;
 
     .cell {
-      padding-top: 0.2em;
       font-size: 14em;
       font-family: 'Permanent Marker', cursive;
       background-color: white;
       color: #333333;
       border: none;
+      border-radius: 3px;
+
+      &:focus {
+        outline: none;
+      }
+      &:focus-within::after {
+        content: unset;
+      }
     }
   }
 

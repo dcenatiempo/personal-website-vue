@@ -1,12 +1,12 @@
 <template>
   <nav class="project-nav">
-    <a
-      :href="`/projects/${prevLink}`"
+    <nuxt-link
+      :to="`/projects/${prevLink}`"
       class="left-nav"
       title="previous project"
     >
       &lt;prev project
-    </a>
+    </nuxt-link>
     <a :href="thisLink" target="_blank" title="view code in GitHub">
       <img
         src="~/assets/images/github.svg"
@@ -14,9 +14,13 @@
         alt="view code in GitHub"
       />
     </a>
-    <a :href="`/projects/${nextLink}`" class="right-nav" title="next project">
+    <nuxt-link
+      :to="`/projects/${nextLink}`"
+      class="right-nav"
+      title="next project"
+    >
       next project&gt;
-    </a>
+    </nuxt-link>
   </nav>
 </template>
 
