@@ -3,7 +3,7 @@
     <MainHeader />
     <nuxt />
     <ProjectNav
-      :this-link="projects[currentIndex].link"
+      :github-link="projects[currentIndex].github"
       :prev-link="projects[prevIndex].route"
       :next-link="projects[nextIndex].route"
     />
@@ -15,53 +15,33 @@
 import MainHeader from '~/components/navigation/MainHeader.vue';
 import MainFooter from '~/components/navigation/MainFooter.vue';
 import ProjectNav from '~/components/navigation/ProjectNav.vue';
-
-const projects = [
-  {
-    route: 'simon-game',
-    link:
-      'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/simon-game.vue',
-  },
-  {
-    route: 'tic-tac-toe',
-    link:
-      'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/tic-tac-toe.vue',
-  },
-  {
-    route: 'wikipedia-search',
-    link:
-      'https://github.com/dcenatiempo/personal-website-vue/blob/master/src/pages/projects/wikipedia-search.vue',
-  },
-  {
-    route: 'basic-calculator',
-    link: '',
-  },
-];
+import { PROJECT_DATA } from '~/lib/constants';
 
 export default {
   components: { MainHeader, MainFooter, ProjectNav },
-  data() {
-    return {
-      projects: projects,
-    };
-  },
   computed: {
+    projects() {
+      return PROJECT_DATA.filter(p => !p.link.includes('http')).map(p => ({
+        github: p.github,
+        route: p.link,
+      }));
+    },
     currentIndex() {
-      const vm = this;
+      const route = this.$route.path;
       let index = 0;
-      projects.forEach((project, i) => {
-        if (vm.$route.path.includes(project.route)) index = i;
+      this.projects.forEach((project, i) => {
+        if (route.includes(project.route)) index = i;
       });
       return index;
     },
     prevIndex() {
       let prev = this.currentIndex - 1;
-      prev = prev < 0 ? projects.length - 1 : prev;
+      prev = prev < 0 ? this.projects.length - 1 : prev;
       return prev;
     },
     nextIndex() {
       let next = this.currentIndex + 1;
-      next = next >= projects.length ? 0 : next;
+      next = next >= this.projects.length ? 0 : next;
       return next;
     },
   },

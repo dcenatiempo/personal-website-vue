@@ -38,22 +38,12 @@
       <h2>&lt;portfolio&gt;</h2>
       <div class="portfolio-list">
         <PortfolioItem
-          title="Weather App"
-          content="This is a mobile first responsive PWA<br><br>Skills Used: service workers, AJAX, Transitions, Animations Touch Events, Browser Storage, Geolocation API, Responsive Layout, Grid"
-          link="https://devins-weather-app.herokuapp.com"
-          image="/images/weather-app-screen-shot.jpeg"
-        />
-        <PortfolioItem
-          title="Classic 80's Simon Game"
-          content="This blast from the past uses recorded sounds from an actual Simon device.<br><br> Skills Used: Promises, SVG, Responsive Layout, Flex, HTMLAudioElement"
-          link="/projects/simon-game"
-          image="/images/simon-screen-shot.png"
-        />
-        <PortfolioItem
-          title="Tic-Tac-Toe"
-          content="This game features 3 difficulty levels and an unbeatable AI. Implements a min-max algorithm that I spent way too long figuring out.<br><br>Skills Used: jQuery, Algorithms"
-          link="/projects/tic-tac-toe"
-          image="/images/tic-tac-toe-screen-shot.png"
+          v-for="p in PROJECT_DATA"
+          :key="p.title"
+          :title="p.title"
+          :content="p.content"
+          :link="p.link"
+          :image="p.image"
         />
         <figure>
           <h3>Markdown Previewer</h3>
@@ -71,18 +61,6 @@
             href="./random-quote-machine/index.html"
           />
         </figure>
-        <PortfolioItem
-          title="Basic Calculator"
-          content="A clean calculator based on the cheap handhelds that everyone has used at one point or another.<br><br>Skills Used: Algorithms, Proceedural Programming"
-          link="/projects/basic-calculator"
-          image="/images/calculator-screen-shot.png"
-        />
-        <PortfolioItem
-          title="Wikipedia Search"
-          content="Another clean, simple application. Search for anything!<br><br>Skills Used: AJAX, Responsive Layout"
-          link="/projects/wikipedia-search"
-          image="/images/wikipedia-screen-shot.png"
-        />
         <figure>
           <h3>Rogue-Like</h3>
           <a
@@ -146,9 +124,12 @@
 
 <script>
 import PortfolioItem from '~/components/home/PortfolioItem.vue';
-
+import { PROJECT_DATA } from '~/lib/constants';
 export default {
   components: { PortfolioItem },
+  data: () => ({
+    PROJECT_DATA,
+  }),
 };
 </script>
 
@@ -157,6 +138,17 @@ export default {
   #about > div {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  #portfolio {
+    .portfolio-list {
+      display: flex;
+      flex-flow: row wrap;
+
+      > * {
+        flex: 1 0 220px;
+      }
+    }
   }
 
   .flex-contact {

@@ -1,7 +1,16 @@
 <template>
   <figure class="portfolio-item">
     <h3>{{ title }}</h3>
-    <nuxt-link :to="link" :style="`background-image: url('${image}')`">
+    <a
+      v-if="link.includes('http')"
+      :href="link"
+      target="_blank"
+      :style="`background-image: url('${image}')`"
+    >
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span class="content" v-html="content" />
+    </a>
+    <nuxt-link v-else :to="link" :style="`background-image: url('${image}')`">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <span class="content" v-html="content" />
     </nuxt-link>
@@ -26,11 +35,10 @@ export default {
 .portfolio-item {
   margin: 1rem;
   position: relative;
-  &:not(.codepen) {
-    height: 399px;
-    border: 1px solid rgb(101, 101, 101);
-  }
-  &:not(.codepen) > h3 {
+  height: 300px;
+  border: 1px solid rgb(101, 101, 101);
+
+  > h3 {
     height: 50px;
     width: 100%;
     margin: 0;
@@ -45,6 +53,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   > a {
     display: block;
     position: relative;
@@ -54,6 +63,7 @@ export default {
     width: 100%;
     height: calc(100% - 50px);
   }
+
   .content {
     position: absolute;
     top: 0;

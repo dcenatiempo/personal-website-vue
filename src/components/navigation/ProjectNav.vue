@@ -1,24 +1,16 @@
 <template>
   <nav class="project-nav">
-    <nuxt-link
-      :to="`/projects/${prevLink}`"
-      class="left-nav"
-      title="previous project"
-    >
+    <nuxt-link :to="prevLink" class="left-nav" title="previous project">
       &lt;prev project
     </nuxt-link>
-    <a :href="thisLink" target="_blank" title="view code in GitHub">
+    <a :href="githubLink" target="_blank" title="view code in GitHub">
       <img
         src="~/assets/images/github.svg"
         class="github-logo"
         alt="view code in GitHub"
       />
     </a>
-    <nuxt-link
-      :to="`/projects/${nextLink}`"
-      class="right-nav"
-      title="next project"
-    >
+    <nuxt-link :to="nextLink" class="right-nav" title="next project">
       next project&gt;
     </nuxt-link>
   </nav>
@@ -27,7 +19,7 @@
 <script>
 export default {
   props: {
-    thisLink: { type: String, default: '#' },
+    githubLink: { type: String, default: '#' },
     prevLink: { type: String, default: '#' },
     nextLink: { type: String, default: '#' },
   },
