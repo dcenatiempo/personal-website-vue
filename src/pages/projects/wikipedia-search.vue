@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import WikipediaSearch from '~/components/projects/wikipedia-search';
+import WikipediaSearch from '~/projects/wikipedia-search';
 export default {
   layout: 'projects',
   components: { WikipediaSearch },

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SimonGame from '~/components/projects/simon-game';
+import SimonGame from '~/projects/simon-game';
 export default {
   layout: 'projects',
   components: { SimonGame },

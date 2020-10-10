@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import BasicCalculator from '~/components/projects/basic-calculator';
+import BasicCalculator from '~/projects/basic-calculator';
 export default {
   layout: 'projects',
   components: { BasicCalculator },
