@@ -6,7 +6,16 @@ const PROJECT_DATA = Object.freeze([
     link: '/projects/simon-game',
     image: '/images/simon-screen-shot.png',
     github:
-      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/components/projects/simon-game',
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/simon-game',
+  },
+  {
+    title: "Conway's Game of Life",
+    content:
+      'A classic programming challenge with my own twist! Fully responsive interactive controls. A great time waster!<br><br>Skills Used: Vue, Canvas, Responsive Layout, Algorithms',
+    link: '/projects/game-of-life',
+    image: '/images/game-of-life-screen-shot.png',
+    github:
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/game-of-life',
   },
   {
     title: 'Weather App',
@@ -23,7 +32,7 @@ const PROJECT_DATA = Object.freeze([
     link: '/projects/tic-tac-toe',
     image: '/images/tic-tac-toe-screen-shot.png',
     github:
-      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/components/projects/tic-tac-toe',
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/tic-tac-toe',
   },
   {
     title: 'Notez',
@@ -40,7 +49,7 @@ const PROJECT_DATA = Object.freeze([
     link: '/projects/basic-calculator',
     image: '/images/calculator-screen-shot.png',
     github:
-      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/components/projects/basic-calculator',
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/basic-calculator',
   },
   {
     title: 'Wikipedia Search',
@@ -49,7 +58,7 @@ const PROJECT_DATA = Object.freeze([
     link: '/projects/wikipedia-search',
     image: '/images/wikipedia-screen-shot.png',
     github:
-      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/components/projects/wikipedia-search',
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/wikipedia-search',
   },
 ]);
 
