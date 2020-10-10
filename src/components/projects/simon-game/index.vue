@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       numCorrect: 0, // current number correct in round
-      roundsNeededToWin: 3, // number of rounds to win
+      roundsNeededToWin: 20, // number of rounds to win
       isDeviceTurn: true, // disable player actions
       strictMode: false, // one wrong move, game over
       gameHasStarted: false,
