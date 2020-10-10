@@ -198,7 +198,9 @@ export default {
       this.rightDisplay = false;
       this.typingNum = false;
 
-      // set defaults in case "CE" is pressed is.defaultOperator = this.operator; is.defaultTermR = this.termR;
+      // set defaults in case "CE" is pressed
+      this.defaultOperator = this.operator;
+      this.defaultTermR = this.termR;
 
       // do calculation and display to screen
       this.termL = this.operator(this.termL, this.termR);
@@ -222,7 +224,7 @@ export default {
       }
     },
     clearEntry() {
-      this.termR = this.defaultTermR;
+      this.termR = 0;
       this.operator = this.defaultOperator;
       this.typingNum = false;
       this.decimalMode = false;
@@ -319,6 +321,9 @@ export default {
   border-radius: 12px;
   box-shadow: 5px 5px 20px -5px grey, 7px 7px 8px 0px #ffffff inset,
     -5px -5px 7px -2px #8c8c8c inset;
+  border: 3px solid lightgray;
+  border-bottom-color: gray;
+  border-right-color: gray;
 
   * {
     box-sizing: border-box;
