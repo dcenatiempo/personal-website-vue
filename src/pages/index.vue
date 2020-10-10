@@ -71,14 +71,6 @@
           />
         </figure>
         <figure>
-          <h3>Conway's Game of Life</h3>
-          <a
-            class="game-of-life"
-            target="_blank"
-            href="https://codepen.io/dcenatiempo/pen/zdOzrL/"
-          />
-        </figure>
-        <figure>
           <h3>Recipe Box</h3>
           <a
             class="recipe"

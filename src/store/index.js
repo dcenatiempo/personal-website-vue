@@ -1,14 +1,14 @@
 export const state = () => ({
-  someState: false,
+  hideNavigation: false,
 });
 
 export const getters = {
-  someState: state => state.someState,
+  hideNavigation: state => state.hideNavigation,
 };
 
 export const mutations = {
-  SOME_MUTATION(state, val) {
-    state.someState = val;
+  toggleNavigation(state, val) {
+    state.hideNavigation = val === undefined ? !state.hideNavigation : val;
   },
 };
 

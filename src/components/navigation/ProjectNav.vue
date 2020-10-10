@@ -1,5 +1,5 @@
 <template>
-  <nav class="project-nav">
+  <nav class="project-nav" :class="{ hide: hideNavigation }">
     <nuxt-link :to="prevLink" class="left-nav" title="previous project">
       &lt;prev project
     </nuxt-link>
@@ -13,11 +13,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   props: {
     githubLink: { type: String, default: '#' },
     prevLink: { type: String, default: '#' },
     nextLink: { type: String, default: '#' },
+  },
+  computed: {
+    ...mapGetters(['hideNavigation']),
   },
 };
 </script>
@@ -38,6 +43,10 @@ export default {
     rgba(255, 255, 255, 0.75),
     white
   );
+
+  &.hide {
+    display: none;
+  }
 
   .left-nav {
     text-align: right;
