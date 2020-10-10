@@ -4,6 +4,7 @@ import BaseRadioButton from './BaseRadioButton.vue';
 import BaseMultiCheckboxInput from './BaseMultiCheckboxInput.vue';
 import BaseRadioInputGroup from './BaseRadioInputGroup.vue';
 import BaseSegmentedControl from './BaseSegmentedControl.vue';
+import BaseSvg from './BaseSvg.vue';
 
 export {
   BaseButton,
@@ -12,4 +13,5 @@ export {
   BaseMultiCheckboxInput,
   BaseRadioInputGroup,
   BaseSegmentedControl,
+  BaseSvg,
 };

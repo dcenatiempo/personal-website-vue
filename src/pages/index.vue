@@ -43,6 +43,7 @@
           :title="p.title"
           :content="p.content"
           :link="p.link"
+          :github="p.github"
           :image="p.image"
         />
         <figure>
