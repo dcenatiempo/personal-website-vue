@@ -5,6 +5,8 @@
       :cells="cells"
       :speed="settings.speed"
       :zoom="settings.zoom"
+      :rows="settings.rows"
+      :cols="settings.cols"
       :power-on="on"
       @update-board="updateBoard"
       @manual-click="manualClick"
