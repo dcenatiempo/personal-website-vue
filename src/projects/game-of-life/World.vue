@@ -1,23 +1,27 @@
 <template>
-  <canvas id="world" :height="rows * zoom" :width="cols * zoom" />
-  <!-- <div v-for="(row, ri) in cells" :key="ri" class="row">
-      <Cell
-        v-for="(cell, ci) in row"
-        :key="`${ri}-${ci}`"
-        :alive="cell.alive"
-        :count="cell.count"
-        :zoom="zoom"
-        @click="handleClick(ri, ci)"
-      />
-    </div> -->
+  <div class="world">
+    <canvas
+      id="canvas"
+      :height="rows * zoom"
+      :width="cols * zoom"
+      @click="handleClick"
+    />
+  </div>
 </template>
 
 <script>
 const START_ANGLE = 0; // Starting point on circle
 const END_ANGLE = 2 * Math.PI; // End point on circle
 
+const BACKGROUND_COLOR = 'rgb(255, 255, 150)';
+const ALIVE_COLOR = '#009973';
+
 export default {
   props: {
+    generations: {
+      type: Number,
+      default: 0,
+    },
     cells: {
       type: Array,
       default: () => [],
@@ -45,20 +49,39 @@ export default {
   },
   data: () => ({
     canvas: null,
+    cxt: null,
+    lastRenderedGeneration: null,
   }),
   watch: {
-    cells(cells) {
-      this.drawWorld(cells);
+    powerOn(on) {
+      if (!on) return;
+      this.initiateAnimate();
     },
   },
   mounted() {
-    let c = document.getElementById('world');
-    this.canvas = c.getContext('2d');
+    const vm = this;
+    this.canvas = document.getElementById('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    vm.drawWorld(vm.cells);
   },
   methods: {
-    handleClick(row, col) {
+    step() {
+      if (this.lastRenderedGeneration !== this.generations) {
+        this.lastRenderedGeneration = this.generations;
+        this.drawWorld(this.cells);
+      }
+
+      if (this.powerOn) window.requestAnimationFrame(this.step);
+    },
+    initiateAnimate() {
+      window.requestAnimationFrame(this.step);
+    },
+    handleClick(e) {
+      // TODO: figure out what cell II'm clicking on
+      let row, col;
+      console.log(e);
       //extract coordinates and send them as arguments to manualClick()
-      this.$emit('manual-click', { row, col });
+      // this.$emit('manual-click', { row, col });
     },
     drawCell(ri, ci) {
       const cell = this.cells[ri][ci];
@@ -66,13 +89,16 @@ export default {
       const radius = diameter / 2; // Arc radius
       const x = diameter * ci + radius; // x coordinate
       const y = diameter * (ri + 1); // y coordinate
-      this.canvas.beginPath();
-      this.canvas.arc(x, y, radius, START_ANGLE, END_ANGLE);
-      this.canvas.fillStyle = this.getColor(cell);
-      this.canvas.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(x, y, radius, START_ANGLE, END_ANGLE);
+      this.ctx.fillStyle = this.getColor(cell);
+      this.ctx.fill();
     },
     drawWorld(cells) {
+      // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       // draw background
+      this.ctx.fillStyle = BACKGROUND_COLOR;
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       // draw each cell
       cells.forEach((row, ri) => {
@@ -82,13 +108,9 @@ export default {
       });
     },
     getColor(cell) {
-      if (cell.alive) return '#009973';
+      if (cell.alive) return ALIVE_COLOR;
       if (cell.count < 200) return `rgb(255, ${255 - cell.count}, 0)`;
       else if (cell.count < 300) return `rgb(255, 55, ${-200 + cell.count})`;
-      //	else if(count < 380)
-      //		return "rgb("+(555-count)+", "+(55)			+", "+(count-200)	+")"
-      //	else if(count < 480)
-      //		return "rgb("+(175)		 +", "+(count-325)	+", "+(175)	+")"
       else return 'rgb(255, 55, 100)';
     },
   },

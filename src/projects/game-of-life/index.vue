@@ -2,6 +2,7 @@
   <main class="game-of-life">
     <Header :generations="generations" />
     <World
+      :generations="generations"
       :cells="cells"
       :speed="settings.speed"
       :zoom="settings.zoom"
@@ -49,10 +50,10 @@ export default {
   }),
   computed: {},
   watch: {
-    'viewport.w'() {
+    'viewport.change'() {
+      if (!this.settings.autoFill) return;
       this.resetGrid();
-      if (this.settings.autoFill) this.changeFill();
-      console.log('window size change!');
+      this.changeFill();
     },
     on() {
       if (this.on) {
@@ -75,7 +76,6 @@ export default {
     this.viewport = process.client ? this.$viewport : { w: 0, h: 0 };
     this.resetGrid();
     this.randomFill();
-    this.$store.commit('toggleNavigation', true);
   },
   methods: {
     resetGrid() {
@@ -131,6 +131,7 @@ export default {
       this.cells[row][col].alive = !this.cells[row][col].alive;
     },
     updateBoard() {
+      // TODO: is there a way I can improve performance?
       const vm = this;
       const height = this.cells.length - 1;
       const width = this.cells[0].length - 1;
