@@ -2,9 +2,13 @@
   <main class="game-of-life">
     <Header :generations="generations" />
     <World
+      :manual-clicks="manualClicks"
+      :generations="generations"
       :cells="cells"
       :speed="settings.speed"
       :zoom="settings.zoom"
+      :rows="settings.rows"
+      :cols="settings.cols"
       :power-on="on"
       @update-board="updateBoard"
       @manual-click="manualClick"
@@ -30,6 +34,7 @@ export default {
     Footer,
   },
   data: () => ({
+    manualClicks: 0,
     interval: null,
     viewport: { w: 0, h: 0 },
     on: false, // true/false
@@ -47,10 +52,10 @@ export default {
   }),
   computed: {},
   watch: {
-    'viewport.w'() {
+    'viewport.change'() {
+      if (!this.settings.autoFill) return;
       this.resetGrid();
-      if (this.settings.autoFill) this.changeFill();
-      console.log('window size change!');
+      this.changeFill();
     },
     on() {
       if (this.on) {
@@ -73,7 +78,6 @@ export default {
     this.viewport = process.client ? this.$viewport : { w: 0, h: 0 };
     this.resetGrid();
     this.randomFill();
-    this.$store.commit('toggleNavigation', true);
   },
   methods: {
     resetGrid() {
@@ -123,15 +127,15 @@ export default {
     },
 
     manualClick({ row, col }) {
-      // let tempArray = this.cells.map(r => r.map(c => c));
-      // tempArray[row][col].alive = !tempArray[row][col].alive;
-      // this.cells = tempArray,
       this.cells[row][col].alive = !this.cells[row][col].alive;
+      this.manualClicks += 1;
     },
     updateBoard() {
+      // TODO: is there a way I can improve performance?
       const vm = this;
       const height = this.cells.length - 1;
       const width = this.cells[0].length - 1;
+
       // count up all live neighbors
       // ri, rc parameters are coordinates of cell in question
       function countNeighbors(ri, ci) {
@@ -247,7 +251,7 @@ main.game-of-life {
   align-items: center;
   height: 100vh;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   padding: 0;
 
   * {

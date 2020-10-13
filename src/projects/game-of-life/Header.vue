@@ -12,13 +12,7 @@
     </div>
     <div>
       Gen:
-      <input
-        class="generations"
-        type="text"
-        readOnly
-        :value="generations"
-        size="4"
-      />
+      <span class="generations">{{ generations }}</span>
     </div>
   </header>
 </template>
@@ -36,9 +30,6 @@ export default {
 
 .game-of-life {
   .header {
-    position: fixed;
-    top: 0;
-    left: 0;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -46,7 +37,7 @@ export default {
     width: 100%;
     height: 50px;
     background: $header;
-    margin: auto;
+    margin: 0 auto;
 
     > p {
       font-size: 1.8em;

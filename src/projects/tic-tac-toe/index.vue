@@ -148,7 +148,7 @@ function nextAiMove({ board = FRESH_BOARD, intel = -1, human = 'x' }) {
       human,
       intel,
     });
-    //console.log(moves[i]+" "+aNew)
+
     if (aNew < aMin) {
       aMin = aNew;
       move = moves[i];
