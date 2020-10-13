@@ -97,11 +97,10 @@ export default {
 
 <style lang="scss">
 @import './vars';
-#world {
-  display: flex;
-  flex-flow: column nowrap;
+.world {
+  flex: 1;
   background: rgb(255, 255, 150);
-  height: 100%;
   width: 100%;
+  overflow: scroll;
 }
 </style>

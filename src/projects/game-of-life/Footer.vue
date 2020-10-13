@@ -125,9 +125,6 @@ export default {
   flex-flow: row wrap;
   justify-content: space-around;
   align-items: center;
-  position: fixed;
-  bottom: 0;
-  left: 0;
   height: 50px;
   width: 100%;
   padding: 0px;

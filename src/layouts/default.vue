@@ -15,7 +15,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .layout {
   display: flex;
   flex-flow: column nowrap;
@@ -30,6 +30,8 @@ export default {
     background-color: white;
     padding: 0 20px;
     margin-bottom: 0;
+    flex: 1;
+    overflow: scroll;
   }
 }
 </style>

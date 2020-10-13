@@ -1,5 +1,5 @@
 <template>
-  <header class="main-header" :class="{ hide: hideNavigation }">
+  <header class="main-header" :class="{ hide }">
     <div class="inner-header">
       <img
         src="~/assets/images/dcenatiempo-logo.svg"
@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 import HamburgerButton from '~/components/navigation/HamburgerButton.vue';
 
 export default {
@@ -53,7 +51,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['hideNavigation']),
     isSmallScreen() {
       return this.viewport.w <= this.breakpoint;
     },
@@ -84,9 +81,10 @@ export default {
   top: 0; /* required as well. */
   height: 60px;
   z-index: 10;
+  transition: transform ease 500ms;
 
   &.hide {
-    display: none;
+    transform: translateY(-60px);
   }
 
   .inner-header {
@@ -154,23 +152,5 @@ export default {
       }
     }
   }
-}
-
-.outer {
-  position: fixed;
-  top: 60px;
-  width: 100%;
-  background: linear-gradient(to left, #4fdf82, #3cc26d, #2fb05c);
-  opacity: 1;
-  transition: visibility 0.1s, opacity 0.1s linear;
-}
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-.inner {
-  position: relative;
-  margin: 20px auto;
-  width: 100px;
 }
 </style>

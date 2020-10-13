@@ -249,7 +249,7 @@ main.game-of-life {
   align-items: center;
   height: 100vh;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   padding: 0;
 
   * {
