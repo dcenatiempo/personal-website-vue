@@ -2,6 +2,7 @@
   <main class="game-of-life">
     <Header :generations="generations" />
     <World
+      :manual-clicks="manualClicks"
       :generations="generations"
       :cells="cells"
       :speed="settings.speed"
@@ -33,6 +34,7 @@ export default {
     Footer,
   },
   data: () => ({
+    manualClicks: 0,
     interval: null,
     viewport: { w: 0, h: 0 },
     on: false, // true/false
@@ -125,16 +127,15 @@ export default {
     },
 
     manualClick({ row, col }) {
-      // let tempArray = this.cells.map(r => r.map(c => c));
-      // tempArray[row][col].alive = !tempArray[row][col].alive;
-      // this.cells = tempArray,
       this.cells[row][col].alive = !this.cells[row][col].alive;
+      this.manualClicks += 1;
     },
     updateBoard() {
       // TODO: is there a way I can improve performance?
       const vm = this;
       const height = this.cells.length - 1;
       const width = this.cells[0].length - 1;
+
       // count up all live neighbors
       // ri, rc parameters are coordinates of cell in question
       function countNeighbors(ri, ci) {

@@ -18,10 +18,10 @@
         class="speed-slider slider"
         type="range"
         min="1"
-        max="50"
-        step="2"
+        max="26"
+        step="1"
         :value="settings.speed"
-        @change="e => changeSetting(e, 'speed')"
+        @input="e => changeSetting(e, 'speed')"
       />
     </div>
     <div class="flex-col">
@@ -30,10 +30,10 @@
         class="zoom-slider slider"
         type="range"
         min="3"
-        max="40"
+        max="26"
         step="1"
         :value="settings.zoom"
-        @change="e => changeSetting(e, 'zoom')"
+        @input="e => changeSetting(e, 'zoom')"
       />
     </div>
     <div class="flex-col">
@@ -45,7 +45,7 @@
         max="7"
         step="1"
         :value="settings.density"
-        @change="e => changeSetting(e, 'density')"
+        @input="e => changeSetting(e, 'density')"
       />
     </div>
     <div class="flex-col">
@@ -107,7 +107,11 @@ export default {
   },
   methods: {
     changeSetting(e, setting) {
-      const value = setting === 'autoFill' ? e.target.checked : +e.target.value;
+      let value;
+      if (setting === 'autoFill') value = e.target.checked;
+      else if (setting === 'zoom') value = Math.floor(e.target.value * 1.1);
+      else if (setting === 'speed') value = Math.floor(e.target.value * 1.3);
+      else value = +e.target.value;
       this.$emit('change-setting', { setting, value });
     },
     emitAction(action) {
