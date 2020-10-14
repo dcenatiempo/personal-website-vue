@@ -63,14 +63,6 @@
           />
         </figure>
         <figure>
-          <h3>Rogue-Like</h3>
-          <a
-            class="rogue-like"
-            target="_blank"
-            href="https://codepen.io/dcenatiempo/pen/ayWxBR/"
-          />
-        </figure>
-        <figure>
           <h3>Recipe Box</h3>
           <a
             class="recipe"

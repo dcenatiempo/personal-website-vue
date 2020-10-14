@@ -26,6 +26,15 @@ const PROJECT_DATA = Object.freeze([
     github: 'https://github.com/dcenatiempo/mobile-weather-app',
   },
   {
+    title: 'Dungeon Crawl',
+    content:
+      'One of my biggest projects. You are the blue hero. Kill all the red monsters. Level up and trade in the yellow market. Find the purple gates to descend deeper into the dungeon!<br><br>Skills Used: Game Design, Flux, Responsive Layout, Algorithms, Procedural Content Generation',
+    link: '/projects/dungeon-crawl',
+    image: '/images/dungeon-crawl-screen-shot.png',
+    github:
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/dungeon-crawl',
+  },
+  {
     title: 'Tic-Tac-Toe',
     content:
       'This game features 3 difficulty levels and an unbeatable AI. Implements a min-max algorithm that I spent way too long figuring out.<br><br>Skills Used: Algorithms, Javascript',
