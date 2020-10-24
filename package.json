@@ -10,7 +10,8 @@
     "storybook": "npx nuxt storybook"
   },
   "dependencies": {
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "dungeon-crawl": "dcenatiempo/dungeon-crawl-vue#master"
   },
   "devDependencies": {
     "@nuxtjs/storybook": "^2.2.1",

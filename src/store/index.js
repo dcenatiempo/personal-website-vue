@@ -1,4 +1,5 @@
 export const state = () => ({
+  clearUnregisteredModulesCount: 0,
   hideNavigation: false,
 });
 
@@ -9,6 +10,9 @@ export const getters = {
 export const mutations = {
   toggleNavigation(state, val) {
     state.hideNavigation = val === undefined ? !state.hideNavigation : val;
+  },
+  clearUnregisteredModules(state) {
+    state.clearUnregisteredModulesCount += 1;
   },
 };
 
