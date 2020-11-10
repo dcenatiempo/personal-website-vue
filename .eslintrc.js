@@ -39,6 +39,7 @@ module.exports = {
         semi: true,
         singleQuote: true,
         arrowParens: 'avoid',
+        trailingComma: 'es5',
       },
     ],
     quotes: [2, 'single', { avoidEscape: true }],
