@@ -1,7 +1,7 @@
 <template>
   <span
     class="base-checkbox-input"
-    :class="{ disabled, required, checked: localChecked }"
+    :class="{ disabled, required, checked: localChecked, indeterminate }"
   >
     <input
       :id="id"
@@ -20,10 +20,10 @@
 <script>
 export default {
   // breaks storybook
-  // model: {
-  //   prop: 'checked',
-  //   event: 'change',
-  // },
+  model: {
+    prop: 'checked',
+    event: 'change',
+  },
   props: {
     /**
 Required to differenciate multiple inputs on the same page
@@ -35,6 +35,7 @@ Required to differenciate multiple inputs on the same page
       default: false,
       validator: val => [true, false, 0, 1].includes(val),
     },
+    indeterminate: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     label: { type: [String], default: 'my label' },
@@ -124,6 +125,24 @@ Required to differenciate multiple inputs on the same page
       height: 6px;
       width: 13px;
       transform: rotate(-45deg);
+    }
+  }
+
+  &.indeterminate {
+    input[type='checkbox'] + label::before {
+      background: lightgray;
+    }
+
+    input[type='checkbox'] + label::after {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 3px;
+      border-left: none;
+      border-bottom: 2px solid black;
+      height: 6px;
+      width: 13px;
+      transform: unset;
     }
   }
 

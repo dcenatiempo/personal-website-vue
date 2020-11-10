@@ -69,6 +69,14 @@ const PROJECT_DATA = Object.freeze([
     github:
       'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/wikipedia-search',
   },
+  {
+    title: 'US Deaths Graph',
+    content: 'Data visualization of US Deaths from 2014 - 2018<br><br>D3',
+    link: '/projects/us-deaths',
+    image: '/images/us-deaths-screen-shot.png',
+    github:
+      'https://github.com/dcenatiempo/personal-website-vue/tree/master/src/projects/us-deaths',
+  },
 ]);
 
 export { PROJECT_DATA };

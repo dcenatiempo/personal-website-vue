@@ -22,10 +22,10 @@ import isObject from 'lodash/isObject';
 
 export default {
   // breaks storybook
-  // model: {
-  //   prop: 'value',
-  //   event: 'change',
-  // },
+  model: {
+    prop: 'value',
+    event: 'change',
+  },
   props: {
     id: { type: [Number, String], required: true },
     options: { type: [Array], default: () => [] },
